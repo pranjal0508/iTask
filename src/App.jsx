@@ -17,6 +17,9 @@ function App() {
     }
   }, [])
 
+  // useEffect(() => {
+  //   saveToLocalStorage();
+  // })
 
   const saveToLocalStorage = () => {
     // setTodos(todos);
@@ -74,18 +77,19 @@ function App() {
     <>
       <Navbar />
 
-      <div className="container mx-auto my-5 bg-violet-200 p-5 rounded-xl min-h-[70vh] w-1/2">
-        <h1 className="font-bold text-center text-lg">iTask - Manage Your Tasks at One Place</h1>
+      <div className="md:container md:mx-auto mx-2 my-5 bg-violet-200 p-5 rounded-xl min-h-[70vh] md:w-1/2">
+        <h1 className="font-bold text-center md:text-3xl text-xl">iTask - Manage Your Tasks at One Place</h1>
         <div className="addTodo my-3 flex flex-col">
-          <h2 className='text-lg font-bold'>Add a Todo</h2>
+          <h2 className='md:text-lg text-md font-bold'>Add a Todo</h2>
           <input onChange={handleChange} value={todo} type="text" className='w-full my-2 rounded-xl px-3 py-1' name="" id="" required />
           <button onClick={handleAdd} disabled={todo.length < 3} className='bg-violet-800 hover:bg-violet-950 text-white p-3 py-1 text-sm rounded-md font-bold mx-auto w-1/2 my-2'>Save</button>
         </div>
+        <hr class="h-px my-3 bg-gray-200 border-0 dark:bg-gray-700"/>
         <div className="flex justify-between">
           <h2 className='text-lg font-bold my-2'>Your Todos</h2>
           <label className="inline-flex items-center cursor-pointer">
             <input type="checkbox" value="" className="sr-only peer" onChange={toggleFinish} checked={showFinished} />
-            <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600"></div>
+            <div className="relative w-9 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-purple-600"></div>
             <span className="ms-3 text-sm font-medium text-gray-900">Show Finished Tasks</span>
           </label>
         </div>
