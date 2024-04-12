@@ -7,24 +7,14 @@ import { MdDelete } from "react-icons/md";
 function App() {
 
   const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    return JSON.parse(localStorage.getItem("todos")) || []
+  });
   const [showFinished, setshowFinished] = useState(true);
 
   useEffect(() => {
-    if (localStorage.getItem("todos")) {
-      let todos = JSON.parse(localStorage.getItem("todos"));
-      setTodos(todos);
-    }
-  }, [])
-
-  // useEffect(() => {
-  //   saveToLocalStorage();
-  // })
-
-  const saveToLocalStorage = () => {
-    // setTodos(todos);
     localStorage.setItem("todos", JSON.stringify(todos));
-  }
+  }, [todos]);
 
   const handleAdd = () => {
     if (todo.trim() === "") {
@@ -32,10 +22,8 @@ function App() {
     } else {
       setTodos([...todos, { todo, id: uuidv4(), isCompleted: false }]);
       setTodo("");
-      saveToLocalStorage();
     }
   }
-
 
   const handleChange = (e) => {
     setTodo(e.target.value);
@@ -49,14 +37,12 @@ function App() {
     let newTodos = [...todos];
     newTodos[index].isCompleted = !newTodos[index].isCompleted;
     setTodos(newTodos);
-    saveToLocalStorage();
   }
 
   const handleEdit = (id) => {
     let todo = todos.filter((item) => item.id === id);
     setTodo(todo[0].todo);
     handleDelete(id);
-    saveToLocalStorage();
   }
 
   const handleDelete = (id) => {
@@ -64,14 +50,11 @@ function App() {
       return item.id !== id;
     })
     setTodos(newTodos);
-    saveToLocalStorage();
   }
 
   const toggleFinish = () => {
     setshowFinished(!showFinished);
   }
-
-
 
   return (
     <>
@@ -82,9 +65,9 @@ function App() {
         <div className="addTodo my-3 flex flex-col">
           <h2 className='md:text-lg text-md font-bold'>Add a Todo</h2>
           <input onChange={handleChange} value={todo} type="text" className='w-full my-2 rounded-xl px-3 py-1' name="" id="" required />
-          <button onClick={handleAdd} disabled={todo.length < 3} className='bg-violet-800 hover:bg-violet-950 text-white p-3 py-1 text-sm rounded-md font-bold mx-auto w-1/2 my-2'>Save</button>
+          <button onClick={handleAdd} disabled={todo.length < 1} className='bg-violet-800 hover:bg-violet-950 text-white p-3 py-1 text-sm rounded-md font-bold mx-auto w-1/2 my-2'>Save</button>
         </div>
-        <hr class="h-px my-3 bg-gray-200 border-0 dark:bg-gray-700"/>
+        <hr className="h-px my-3 bg-gray-200 border-0 dark:bg-gray-700" />
         <div className="flex justify-between">
           <h2 className='text-lg font-bold my-2'>Your Todos</h2>
           <label className="inline-flex items-center cursor-pointer">
